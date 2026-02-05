@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Sayang 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://dekatutorial.github.io/crd/s.js"></script>
+  <link rel="stylesheet" href="https://dekatutorial.github.io/crd/s.css" />
+
+  <style>
+    #ccp {
+      padding: 15px;
+    }
+    .cp {
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .cp span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<script>dt()</script>
+
+<div class="ctnr">
+  <div class="lv">
+    <img src="https://dekatutorial.github.io/crd/lv.svg" />
+    <p>Klik love-nya ya sayang 💖</p>
+  </div>
+
+  <div class="ctn">
+    <button class="btn next">[ Lanjut ]</button>
+    <button class="btn send">[ Kirim Pesan ]</button>
+  </div>
+</div>
+
+<div id="ccp"></div>
+
+<script>
+/* =========================
+   KONTEN
+   ========================= */
+konten = [
+  {
+    gambar: "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+    ucapan: "Happy birthday sayanggg 🎂💖\nHari ini spesial banget karena kamu lahir.\nDan aku beruntung banget bisa punya kamu 🥺🤍"
+  },
+  {
+    gambar: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+    ucapan: "Makasih ya udah selalu ada.\nDari hari paling capek,\nsampai hari paling bahagia.\nKamu rumahku 🏡💕"
+  },
+  {
+    gambar: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+    ucapan: "Doaku sederhana:\nsemoga kamu sehat, bahagia,\ndan semua mimpimu tercapai.\nAku mau terus di samping kamu 😘"
+  },
+  {
+    gambar: "https://media.giphy.com/media/26FLdmIp6wJr91JAI/giphy.gif",
+    ucapan: "Kalau suatu hari kamu capek sama dunia,\ningat ya…\nada aku yang selalu milih kamu.\nI love you, always 🫶💌"
+  }
+];
+
+/* MUSIK */
+musik = "https://cdn.pixabay.com/audio/2022/03/15/audio_7c8b0e3f9c.mp3";
+
+/* WhatsApp (opsional) */
+nomorWhatsapp = "6281221978883";
+
+DekaTutorial(konten, musik, nomorWhatsapp);
+
+/* =========================
+   PESAN (LOCAL STORAGE)
+   ========================= */
+const pesanKey = "pesan_ulangtahun";
+
+function renderPesan() {
+  const box = document.getElementById("ccp");
+  const data = JSON.parse(localStorage.getItem(pesanKey)) || [];
+  box.innerHTML = "";
+  data.forEach(p => {
+    box.innerHTML += `
+      <div class="cp">
+        <p><span>Pesan :</span><br>${p.text}</p>
+        <h6>${p.time}</h6>
+      </div>`;
+  });
+}
+
+document.querySelector(".send").onclick = () => {
+  Swal.fire({
+    title: "Tulis pesan 💌",
+    input: "textarea",
+    inputPlaceholder: "Tulis pesan kamu di sini...",
+    showCancelButton: true,
+    confirmButtonText: "Kirim"
+  }).then(res => {
+    if (res.isConfirmed && res.value.trim() !== "") {
+      const data = JSON.parse(localStorage.getItem(pesanKey)) || [];
+      data.push({
+        text: res.value,
+        time: new Date().toLocaleString("id-ID")
+      });
+      localStorage.setItem(pesanKey, JSON.stringify(data));
+      renderPesan();
+    }
+  });
+};
+
+renderPesan();
+</script>
+
+</body>
+</html>
